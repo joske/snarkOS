@@ -35,6 +35,7 @@ use tracing_subscriber::{
 /// 6 => info, debug, trace, snarkos_node_tcp=trace
 /// ```
 pub fn initialize_logger<P: AsRef<Path>>(verbosity: u8, nodisplay: bool, logfile: P) -> mpsc::Receiver<Vec<u8>> {
+    console_subscriber::init();
     match verbosity {
         0 => std::env::set_var("RUST_LOG", "info"),
         1 => std::env::set_var("RUST_LOG", "debug"),
@@ -46,6 +47,8 @@ pub fn initialize_logger<P: AsRef<Path>>(verbosity: u8, nodisplay: bool, logfile
         let filter = EnvFilter::from_default_env()
             .add_directive("mio=off".parse().unwrap())
             .add_directive("tokio_util=off".parse().unwrap())
+            .add_directive("tokio=trace".parse().unwrap())
+            .add_directive("runtime=trace".parse().unwrap())
             .add_directive("hyper=off".parse().unwrap())
             .add_directive("reqwest=off".parse().unwrap())
             .add_directive("want=off".parse().unwrap())
