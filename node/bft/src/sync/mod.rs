@@ -443,6 +443,13 @@ impl<N: Network> Sync<N> {
             tokio::spawn(async move {
                 let _ = self_.gateway.send(peer_ip, Event::CertificateResponse(certificate.into())).await;
             });
+        } else if let Some(certificate) = self.gateway.get_fake_certs(&request.certificate_id) {
+            // Send fake cert that was generated before
+            println!("sending fake cert");
+            let self_ = self.clone();
+            tokio::spawn(async move {
+                let _ = self_.gateway.send(peer_ip, Event::CertificateResponse(certificate.clone().into())).await;
+            });
         }
     }
 
