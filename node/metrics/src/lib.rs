@@ -25,7 +25,7 @@ pub fn initialize_metrics() -> tokio::task::JoinHandle<()> {
 
     // Build the recorder and set as global.
     let (recorder, exporter) = PrometheusBuilder::new().build().expect("can't build the prometheus exporter");
-    metrics::set_boxed_recorder(Box::new(recorder)).expect("can't set the prometheus exporter");
+    metrics::set_global_recorder(recorder).expect("can't set the prometheus exporter");
 
     // Spawn a dedicated task for the exporter on the runtime.
     let metrics_exporter_task = tokio::task::spawn(async move {

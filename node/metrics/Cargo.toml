@@ -20,7 +20,7 @@ edition = "2021"
 metrics = [ "snarkvm/metrics" ]
 
 [dependencies.metrics]
-version = "0.21"
+version = "0.22"
 
 [dependencies.metrics-exporter-prometheus]
 version = "0.13"
