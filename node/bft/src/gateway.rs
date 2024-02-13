@@ -198,7 +198,7 @@ impl<N: Network> Gateway<N> {
             self.account.private_key().sign(&[fake_header.batch_id()], &mut rand::thread_rng()).unwrap();
         let mut signatures = IndexSet::new();
         signatures.insert(fake_signature);
-        BatchCertificate::from(fake_header, signatures).unwrap()
+        BatchCertificate::from_unchecked(fake_header, signatures).unwrap()
     }
 
     /// Run the gateway.
